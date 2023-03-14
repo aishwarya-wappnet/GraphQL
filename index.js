@@ -1,39 +1,27 @@
 const { ApolloServer, gql } = require("apollo-server")
+const { typeDefs } = require("./schema");
+const { Query } = require('./resolvers/Query') 
+const { Product } = require('./resolvers/Product') 
+const { Category } = require('./resolvers/Category')
+const { Mutation } = require('./resolvers/Mutation')
+const { products, categories, reviews } = require('./db');
 
-
-// Scalar types: String, Int, Float, Boolean, ID
-
-// Defining how our query is going to look
-const typeDefs = gql`
-   type Query {
-    hello: String!
-    numberOfAnimals: Int
-    price: Float
-    isCool: Boolean
-   }
-`
-//function that is returning a string which we have specified in our type definition
-const resolvers = {
-    Query: {
-        hello: () => {
-            return null;
-        },
-        numberOfAnimals: () => {
-            return 55;
-        },
-        price: () => {
-            return 23454.2656;
-        },
-        isCool: () => {
-            return false;
-        }
-    }
-}
+//resolver: function that is returning a string which we have specified in our type definition
 const server = new ApolloServer({
     typeDefs,
-    resolvers,
+    resolvers: {
+      Query,
+      Product,
+      Category,
+      Mutation
+    },
+    context: {
+      categories,
+      products,
+      reviews,
+    },
 });
 
 server.listen().then(({url}) => {
-    console.log("Server is ready at " + url);
+    console.log("Server is ready at " + url)
 })
