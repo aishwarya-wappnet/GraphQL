@@ -1,9 +1,9 @@
 exports.Product = {
-    category: ({ categoryId }, args, { categories }) => {
+    category: ({ categoryId }, args, { db }) => {
     // console.log(context)
-      return categories.find((category) => category.id === categoryId)
+      return db.categories.find((category) => category.id === categoryId)
     },
-    reviews: ({ id }, args, { reviews }) => {
-      return reviews.filter(review => review.productId === id)
+    reviews: ({ id }, args, { db }) => {
+      return db.reviews.filter(review => review.productId === id)
     }
   }

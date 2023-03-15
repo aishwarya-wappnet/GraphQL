@@ -4,7 +4,7 @@ const { Query } = require('./resolvers/Query')
 const { Product } = require('./resolvers/Product') 
 const { Category } = require('./resolvers/Category')
 const { Mutation } = require('./resolvers/Mutation')
-const { products, categories, reviews } = require('./db');
+const { db } = require('./db');
 
 //resolver: function that is returning a string which we have specified in our type definition
 const server = new ApolloServer({
@@ -16,9 +16,7 @@ const server = new ApolloServer({
       Mutation
     },
     context: {
-      categories,
-      products,
-      reviews,
+      db,
     },
 });
 
